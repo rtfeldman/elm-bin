@@ -22,7 +22,7 @@ if (!fs.existsSync(distDir)) {
 temp.mkdir('elm-platform-download', function(err, tempDir) {
   var filename = applicableBinaries.filename;
   var destFilename = path.join(distDir, filename);
-  var url = "http://dl.bintray.com/elmlang/elm-platform/"
+  var url = "https://dl.bintray.com/elmlang/elm-platform/"
     + version + "/" + filename;
 
   console.log("Downloading " + url);
