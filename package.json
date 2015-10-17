@@ -1,53 +1,48 @@
 {
   "name": "elm",
-  "version": "2.0.0",
-  "description": "elm-platform wrapper that makes it seamlessly available as a local dependency",
-  "license": "MIT",
-  "repository": "kevva/elm-bin",
+  "version": "0.15.1",
+  "description": "The Elm Platform: Binaries for the Elm programming language.",
+  "license": "BSD-3-Clause",
+  "repository": "https://github.com/elm-lang/elm-platform",
   "author": {
-    "name": "Kevin Mårtensson",
-    "email": "kevinmartensson@gmail.com",
-    "url": "https://github.com/kevva"
+    "name": "Richard Feldman",
+    "email": "richard.t.feldman@gmail.com",
+    "url": "https://github.com/rtfeldman"
   },
   "engines": {
     "node": ">=0.10.0"
   },
   "bin": {
-    "elm": "bin/elm",
-    "elm-make": "bin/elm-make",
-    "elm-package": "bin/elm-package",
-    "elm-reactor": "bin/elm-reactor",
-    "elm-repl": "bin/elm-repl"
+    "elm": "binwrappers/elm",
+    "elm-make": "binwrappers/elm-make",
+    "elm-package": "binwrappers/elm-package",
+    "elm-reactor": "binwrappers/elm-reactor",
+    "elm-repl": "binwrappers/elm-repl"
   },
   "scripts": {
-    "postinstall": "node lib/install.js",
-    "test": "node test.js"
+    "postinstall": "node postinstall.js"
   },
   "files": [
-    "bin",
-    "index.js",
-    "lib",
-    "share"
+    "postinstall.js",
+    "binaries.json",
+    "binwrappers"
   ],
   "keywords": [
     "bin",
     "binary",
-    "cli",
-    "cli-app",
+    "binaries",
     "elm",
     "elm-make",
     "elm-package",
+    "elm-platform",
     "elm-reactor",
     "elm-repl",
-    "wrapper"
+    "platform"
   ],
   "dependencies": {
-    "async-each-series": "^0.1.1",
-    "bin-wrapper": "^3.0.0",
-    "logalot": "^2.0.0"
-  },
-  "devDependencies": {
-    "ava": "^0.0.4",
-    "bin-check": "^1.0.0"
+    "decompress": "2.3.0",
+    "download": "4.3.0",
+    "os-filter-obj": "1.0.3",
+    "temp": "0.8.3"
   }
 }
