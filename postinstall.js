@@ -1,9 +1,9 @@
 var path = require("path");
 var fs = require("fs");
-var temp = require("temp").track();
 var osFilter = require("os-filter-obj");
 var https = require("follow-redirects").https;
-var Decompress = require("decompress");
+var tar = require("tar");
+var zlib = require("zlib");
 var version = require(path.join(__dirname, "package.json")).version;
 var mappings = require(path.join(__dirname, "binaries.json"));
 var applicableBinaries = osFilter(mappings.binaries)[0];
@@ -19,32 +19,17 @@ if (!fs.existsSync(distDir)) {
   fs.mkdirSync(distDir);
 }
 
-temp.mkdir('elm-platform-download', function(err, tempDir) {
-  var filename = applicableBinaries.filename;
-  var downloadedFilename = path.join(tempDir, filename);
-  var url = "https://dl.bintray.com/elmlang/elm-platform/"
-    + version + "/" + filename;
+var filename = applicableBinaries.filename;
+var url = "https://dl.bintray.com/elmlang/elm-platform/"
+  + version + "/" + filename;
 
-  console.log("Downloading " + url);
+console.log("Downloading " + url);
 
-  https.get(url, function(response) {
-    var writeStream = fs.createWriteStream(downloadedFilename);
+https.get(url, function(response) {
+  var untar = tar.Extract({path: distDir, strip: 1});
 
-    writeStream.on("close", function() {
-      new Decompress({mode: "755", strip: 1})
-        .src(downloadedFilename)
-        .dest(distDir)
-        .run();
-    });
-
-    writeStream.on("error", function(error) {
-      console.error("Error receiving data from ", url, error);
-    });
-
-    response.pipe(writeStream);
-  }).on("error", function(error) {
-    console.error("Error communicating with URL ", url, error);
-  });
+  response.pipe(zlib.createGunzip()).pipe(untar);
+}).on("error", function(error) {
+  console.error("Error communicating with URL ", url, error);
+  process.exit(1)
 });
-
-
