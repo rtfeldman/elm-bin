@@ -36,8 +36,6 @@ https.get(url, function(response) {
     })
     .on("end", function() {
       expectedExecutables.forEach(function(executable) {
-        console.log("Dist Dir: ", distDir, "-->", fs.readdirSync(distDir));
-        console.log("bin dir: ", (__dirname + "/../.bin"), "-->", fs.readdirSync((__dirname + "/../.bin")));
         if (!fs.existsSync(path.join(distDir, executable))) {
           console.error("Error extracting executables...");
           console.error("Expected these executables to be in", distDir, " - ", expectedExecutables);
