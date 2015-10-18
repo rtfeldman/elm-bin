@@ -16,6 +16,8 @@ executables.forEach(function (executable) {
 });
 
 function getPathTo(executable) {
+    console.log("getting path to", executable);
+    console.log("got:", paths[executable]);
     return paths[executable];
 }
 
